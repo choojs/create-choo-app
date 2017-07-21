@@ -8,7 +8,10 @@
     "start": "node .",
     "test": "standard && npm run deps"
   },
-  "dependencies": {},
+  "dependencies": {
+    "ansi-escape-sequences": "^3.0.0",
+    "prompt": "^1.0.0"
+  },
   "devDependencies": {
     "dependency-check": "^2.9.1",
     "standard": "^10.0.2",
