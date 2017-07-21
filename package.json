@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "ansi-escape-sequences": "^3.0.0",
-    "prompt": "^1.0.0"
+    "choo": "^5.6.2",
+    "choo-log": "^7.0.1",
+    "mkdirp": "^0.5.1",
+    "run-series": "^1.1.4",
+    "tachyons": "^4.7.4"
   },
   "devDependencies": {
     "dependency-check": "^2.9.1",

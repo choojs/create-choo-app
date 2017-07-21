@@ -4,6 +4,33 @@
 
 Create a fresh choo application
 
+## Usage
+```sh
+$ npx create-choo-app <project-directory>
+```
+
+## API
+```txt
+  $ create-choo-app <project-directory> [options]
+
+  Options:
+
+    -h, --help        print usage
+    -v, --version     print version
+    -q, --quiet       don't output any logs
+
+  Examples:
+
+    Create a new Choo application
+    $ create-choo-app
+
+  Running into trouble? Feel free to file an issue:
+  https://github.com/choojs/create-choo-app/issues/new
+
+  Do you enjoy using this software? Become a backer:
+  https://opencollective.com/choo
+```
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
