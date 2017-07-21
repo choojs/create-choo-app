@@ -24,7 +24,7 @@ var usage = `
   ${ansi.format('https://github.com/choojs/create-choo-app/issues/new', 'cyan')}
 
   Do you enjoy using this software? Become a backer:
-  ${ansi.format('https://opencollective.org/choo', 'cyan')}
+  ${ansi.format('https://opencollective.com/choo', 'cyan')}
 `.replace(/\n$/, '').replace(/^\n/, '')
 
 var nodir = `
