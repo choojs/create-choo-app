@@ -107,6 +107,7 @@ function create (dir, argv) {
       lib.devInstall(dir, pkgs, done)
     },
     function (done) {
+      print('')
       var filename = '.gitignore'
       printFile(filename)
       written.push(path.join(dir, filename))
@@ -153,6 +154,12 @@ function create (dir, argv) {
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeIcon(dir, done)
+    },
+    function (done) {
+      var message = 'The train has departed! :steam_locomotive::train::train::train:'
+      print('\nInitializing ' + clr('git', 'cyan'))
+      written.push(path.join(dir, '.git'))
+      lib.createGit(dir, message, done)
     }
   ]
 

@@ -252,6 +252,16 @@ exports.devInstall = function (dir, packages, cb) {
   })
 }
 
+exports.createGit = function (dir, message, cb) {
+  var cmd = 'git init && git add -A && git commit -m "' + message + '"'
+  var popd = pushd(dir)
+  exec(cmd, function (err) {
+    if (err) return cb(new Error(cmd))
+    popd()
+    cb()
+  })
+}
+
 function pushd (dir) {
   var prev = process.cwd()
   process.chdir(dir)
