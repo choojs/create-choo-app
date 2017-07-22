@@ -89,7 +89,7 @@ function create (dir, argv) {
       var pkgs = [
         'choo',
         'choo-log',
-        'choo-expose',
+        'choo-devtools',
         'choo-service-worker',
         'tachyons'
       ]
