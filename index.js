@@ -8,7 +8,7 @@ exports.mkdir = function (dir, cb) {
     if (err) return cb(new Error('Could not create directory ' + dir))
     fs.readdir(dir, function (err, files) {
       if (err) return cb(new Error('Could not read directory ' + dir))
-      if (files.length) return cb(new Error('Directory contains files. This might possibly conflict.'))
+      if (files.length) return cb(new Error('Directory contains files. This might create conflicts.'))
       cb()
     })
   })
@@ -17,7 +17,6 @@ exports.mkdir = function (dir, cb) {
 exports.writePackage = function (dir, cb) {
   var filename = path.join(dir, 'package.json')
   var name = path.basename(dir)
-
   var file = `
   {
     "name": "${name}",
@@ -31,12 +30,72 @@ exports.writePackage = function (dir, cb) {
       "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
     }
   }
-  `.replace(/\n {2}/, '')
+  `
+  write(filename, file, cb)
+}
 
-  fs.writeFile(filename, file, function (err) {
-    if (err) return cb(new Error('Could not write file ' + filename))
-    cb()
-  })
+exports.writeIgnore = function (dir, cb) {
+  var filename = path.join(dir, '.gitignore')
+  var file = `
+    node_modules/
+    .nyc_output/
+    coverage/
+    dist/
+    tmp/
+    npm-debug.log*
+    .DS_Store
+  `
+
+  write(filename, file, cb)
+}
+
+exports.writeReadme = function (dir, cb) {
+  var filename = path.join(dir, 'README.md')
+  var name = path.basename(dir)
+  var file = `
+    # ${name}
+    A choo application
+
+    ## Routes
+    Route              | Description           |
+    -------------------|-----------------------|
+    \`/\`              | The main view
+    \`/*\`             | Display unhandled routes
+
+    ## Commands
+    Command            | Description           |
+    -------------------|-----------------------|
+    $ npm install      | Install all dependencies
+    $ npm start        | Start the development server
+    $ npm run build    | Compile all files into dist/
+    $ npm run inspect  | Inspect the bundle's dependencies
+  `
+
+  write(filename, file, cb)
+}
+
+exports.writeIndex = function (dir, cb) {
+  var filename = path.join(dir, 'index.js')
+  var file = `
+    var css = require('sheetify')
+    var choo = require('choo')
+
+    css('tachyons')
+
+    var app = choo()
+    if (process.env.NODE_ENV !== 'production') {
+      app.use(require('choo-expose')())
+      app.use(require('choo-log')())
+    }
+
+    app.route('/', require('./views/main'))
+    app.route('/*', require('./views/404'))
+
+    if (!module.parent) app.mount('body')
+    else module.exports = app
+  `
+
+  write(filename, file, cb)
 }
 
 exports.install = function (dir, packages, cb) {
@@ -67,4 +126,12 @@ function pushd (dir) {
   return function popd () {
     process.chdir(prev)
   }
+}
+
+function write (filename, file, cb) {
+  file = file.replace(/\n {2}/, '')
+  fs.writeFile(filename, file, function (err) {
+    if (err) return cb(new Error('Could not write file ' + filename))
+    cb()
+  })
 }

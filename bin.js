@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+var mapLimit = require('async-collection/map-limit')
+var series = require('async-collection/series')
 var ansi = require('ansi-escape-sequences')
 var minimist = require('minimist')
-var series = require('run-series')
+var rimraf = require('rimraf')
 var path = require('path')
 
 var lib = require('./')
@@ -69,36 +71,58 @@ var argv = minimist(process.argv.slice(2), {
 })(argv)
 
 function create (dir, argv) {
+  var written = []
   var cmds = [
     function (done) {
       print('Creating a new Choo app in ' + clr(dir, 'green') + '.\n')
       lib.mkdir(dir, done)
     },
     function (done) {
+      written.push(path.join(dir, 'package.json'))
       lib.writePackage(dir, done)
     },
     function (done) {
       print('Installing packages, this might take a couple of minutes.')
+      written.push(path.join(dir, 'node_modules'))
       var pkgs = ['choo', 'choo-log', 'tachyons']
       var msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.install(dir, pkgs, done)
     },
     function (done) {
-      var pkgs = ['bankai', 'standard']
+      // var pkgs = ['bankai', 'standard']
+      var pkgs = []
       var msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.devInstall(dir, pkgs, done)
+    },
+    function (done) {
+      written.push(path.join(dir, '.gitignore'))
+      lib.writeIgnore(dir, done)
+    },
+    function (done) {
+      written.push(path.join(dir, 'README.md'))
+      lib.writeReadme(dir, done)
+    },
+    function (done) {
+      written.push(path.join(dir, 'index.js'))
+      lib.writeIndex(dir, done)
     }
   ]
 
   series(cmds, function (err) {
     if (err) {
-      print(clr('\nAborting installation.', 'red'))
-      print('  ' + clr(err.message, 'cyan') + ' has failed')
-      process.exit(1)
+      print('\nAborting installation. The following error occured:')
+      print('  ' + clr(err.message, 'red') + '\n')
+      mapLimit(written, 1, cleanFile, function (err) {
+        if (err) throw err
+        console.log('\nCleanup completed, please try again sometime.')
+        process.exit(1)
+      })
     } else {
-      print(clr('All done, good job! ' + TRAIN), 'green')
+      print(clr('\nAll done, good job! ' + TRAIN, 'green'))
+      print('\nDo you enjoy using this software? Become a backer:')
+      print(clr('https://opencollective.com/choo', 'cyan'))
     }
   })
 
@@ -122,4 +146,9 @@ function clrInstall (pkgs) {
       return str + pkg + ', '
     }
   }, '')
+}
+
+function cleanFile (file, cb) {
+  console.log('Deleting generated file… ' + clr(path.basename(file), 'cyan'))
+  rimraf(file, cb)
 }
