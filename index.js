@@ -1,4 +1,5 @@
 var exec = require('child_process').exec
+var dedent = require('dedent')
 var mkdirp = require('mkdirp')
 var path = require('path')
 var pump = require('pump')
@@ -18,7 +19,7 @@ exports.mkdir = function (dir, cb) {
 exports.writePackage = function (dir, cb) {
   var filename = path.join(dir, 'package.json')
   var name = path.basename(dir)
-  var file = `
+  var file = dedent`
   {
     "name": "${name}",
     "version": "1.0.0",
@@ -37,7 +38,7 @@ exports.writePackage = function (dir, cb) {
 
 exports.writeIgnore = function (dir, cb) {
   var filename = path.join(dir, '.gitignore')
-  var file = `
+  var file = dedent`
     node_modules/
     .nyc_output/
     coverage/
@@ -53,7 +54,7 @@ exports.writeIgnore = function (dir, cb) {
 exports.writeReadme = function (dir, cb) {
   var filename = path.join(dir, 'README.md')
   var name = path.basename(dir)
-  var file = `
+  var file = dedent`
     # ${name}
     A very cute app
 
@@ -77,7 +78,7 @@ exports.writeReadme = function (dir, cb) {
 
 exports.writeIndex = function (dir, cb) {
   var filename = path.join(dir, 'index.js')
-  var file = `
+  var file = dedent`
     var css = require('sheetify')
     var choo = require('choo')
 
@@ -102,7 +103,7 @@ exports.writeIndex = function (dir, cb) {
 
 exports.writeServiceWorker = function (dir, cb) {
   var filename = path.join(dir, 'sw.js')
-  var file = `
+  var file = dedent`
     /* global self */
 
     var VERSION = String(Date.now())
@@ -144,7 +145,7 @@ exports.writeServiceWorker = function (dir, cb) {
 exports.writeManifest = function (dir, cb) {
   var filename = path.join(dir, 'manifest.json')
   var name = path.basename(dir)
-  var file = `
+  var file = dedent`
     {
       "name": "${name}",
       "short_name": "${name}",
@@ -167,7 +168,7 @@ exports.writeManifest = function (dir, cb) {
 exports.writeNotFoundView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, '404.js')
-  var file = `
+  var file = dedent`
     var html = require('choo/html')
 
     module.exports = view
@@ -192,7 +193,7 @@ exports.writeNotFoundView = function (dir, cb) {
 exports.writeMainView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, 'main.js')
-  var file = `
+  var file = dedent`
     var html = require('choo/html')
 
     module.exports = view
