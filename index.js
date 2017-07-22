@@ -261,7 +261,6 @@ function pushd (dir) {
 }
 
 function write (filename, file, cb) {
-  file = file.replace(/\n {2,4}/g, '\n')
   fs.writeFile(filename, file, function (err) {
     if (err) return cb(new Error('Could not write file ' + filename))
     cb()
