@@ -1,6 +1,7 @@
 var exec = require('child_process').exec
 var mkdirp = require('mkdirp')
 var path = require('path')
+var pump = require('pump')
 var fs = require('fs')
 
 exports.mkdir = function (dir, cb) {
@@ -54,21 +55,21 @@ exports.writeReadme = function (dir, cb) {
   var name = path.basename(dir)
   var file = `
     # ${name}
-    A choo application
+    A very cute app
 
     ## Routes
-    Route              | Description           |
-    -------------------|-----------------------|
-    \`/\`              | The main view
-    \`/*\`             | Display unhandled routes
+    Route              | File               | Description                     |
+    -------------------|--------------------|---------------------------------|
+    \`/\`              | \`views/main.js\`  | The main view
+    \`/*\`             | \`views/404.js\`   | Display unhandled routes
 
     ## Commands
-    Command            | Description           |
-    -------------------|-----------------------|
-    $ npm install      | Install all dependencies
-    $ npm start        | Start the development server
-    $ npm run build    | Compile all files into dist/
-    $ npm run inspect  | Inspect the bundle's dependencies
+    Command                | Description                                      |
+    -----------------------|--------------------------------------------------|
+    \`$ npm install\`      | Install all dependencies
+    \`$ npm start\`        | Start the development server
+    \`$ npm run build\`    | Compile all files into dist/
+    \`$ npm run inspect\`  | Inspect the bundle's dependencies
   `
 
   write(filename, file, cb)
@@ -87,6 +88,7 @@ exports.writeIndex = function (dir, cb) {
       app.use(require('choo-expose')())
       app.use(require('choo-log')())
     }
+    app.use(require('choo-service-worker')())
 
     app.route('/', require('./views/main'))
     app.route('/*', require('./views/404'))
@@ -96,6 +98,135 @@ exports.writeIndex = function (dir, cb) {
   `
 
   write(filename, file, cb)
+}
+
+exports.writeServiceWorker = function (dir, cb) {
+  var filename = path.join(dir, 'sw.js')
+  var file = `
+    /* global self */
+
+    var VERSION = String(Date.now())
+    var URLS = [
+      '/',
+      '/bundle.css',
+      '/bundle.js',
+      'assets/icon.png'
+    ]
+
+    // Respond with cached resources
+    self.addEventListener('fetch', function (e) {
+      e.respondWith(self.caches.match(e.request).then(function (request) {
+        if (request) return request
+        else return self.fetch(e.request)
+      }))
+    })
+
+    // Register worker
+    self.addEventListener('install', function (e) {
+      e.waitUntil(self.caches.open(VERSION).then(function (cache) {
+        return cache.addAll(URLS)
+      }))
+    })
+
+    // Remove outdated resources
+    self.addEventListener('activate', function (e) {
+      e.waitUntil(self.caches.keys().then(function (keyList) {
+        return Promise.all(keyList.map(function (key, i) {
+          if (keyList[i] !== VERSION) return self.caches.delete(keyList[i])
+        }))
+      }))
+    })
+  `
+
+  write(filename, file, cb)
+}
+
+exports.writeManifest = function (dir, cb) {
+  var filename = path.join(dir, 'manifest.json')
+  var name = path.basename(dir)
+  var file = `
+    {
+      "name": "${name}",
+      "short_name": "${name}",
+      "description": "A very cute app",
+      "start_url": "/",
+      "display": "standalone",
+      "background_color": "#ffc0cb",
+      "theme_color": "#ffc0cb",
+      "icons": [{
+        "src": "/assets/icon.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }]
+    }
+  `
+
+  write(filename, file, cb)
+}
+
+exports.writeNotFoundView = function (dir, cb) {
+  var dirname = path.join(dir, 'views')
+  var filename = path.join(dirname, '404.js')
+  var file = `
+    var html = require('choo/html')
+
+    module.exports = view
+
+    function view (state, emit) {
+      return html\`
+        <body class="sans-serif">
+          <h1 class="f-headline pa3 pa4-ns">
+            404 - route not found
+          </h1>
+        </body>
+      \`
+    }
+  `
+
+  mkdirp(dirname, function (err) {
+    if (err) return cb(new Error('Could not create directory ' + dirname))
+    write(filename, file, cb)
+  })
+}
+
+exports.writeMainView = function (dir, cb) {
+  var dirname = path.join(dir, 'views')
+  var filename = path.join(dirname, 'main.js')
+  var file = `
+    var html = require('choo/html')
+
+    module.exports = view
+
+    function view (state, emit) {
+      return html\`
+        <body class="sans-serif">
+          <h1 class="f-headline pa3 pa4-ns">
+            Choo choo!
+          </h1>
+        </body>
+      \`
+    }
+  `
+
+  mkdirp(dirname, function (err) {
+    if (err) return cb(new Error('Could not create directory ' + dirname))
+    write(filename, file, cb)
+  })
+}
+
+exports.writeIcon = function (dir, cb) {
+  var iconPath = path.join(__dirname, 'assets/icon.png')
+  var dirname = path.join(dir, 'assets')
+  var filename = path.join(dirname, 'manifest.json')
+  mkdirp(dirname, function (err) {
+    if (err) return cb(new Error('Could not create directory ' + dirname))
+    var source = fs.createReadStream(iconPath)
+    var sink = fs.createWriteStream(filename)
+    pump(source, sink, function (err) {
+      if (err) return cb(new Error('Could not write file ' + filename))
+      cb()
+    })
+  })
 }
 
 exports.install = function (dir, packages, cb) {
@@ -129,7 +260,7 @@ function pushd (dir) {
 }
 
 function write (filename, file, cb) {
-  file = file.replace(/\n {2}/, '')
+  file = file.replace(/\n {2,4}/g, '\n')
   fs.writeFile(filename, file, function (err) {
     if (err) return cb(new Error('Could not write file ' + filename))
     cb()

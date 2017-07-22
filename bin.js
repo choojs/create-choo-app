@@ -78,34 +78,81 @@ function create (dir, argv) {
       lib.mkdir(dir, done)
     },
     function (done) {
-      written.push(path.join(dir, 'package.json'))
+      var filename = 'package.json'
+      printFile(filename)
+      written.push(path.join(dir, filename))
       lib.writePackage(dir, done)
     },
     function (done) {
-      print('Installing packages, this might take a couple of minutes.')
+      print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
-      var pkgs = ['choo', 'choo-log', 'tachyons']
+      var pkgs = [
+        'choo',
+        'choo-log',
+        'choo-expose',
+        'choo-service-worker',
+        'tachyons'
+      ]
       var msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.install(dir, pkgs, done)
     },
     function (done) {
-      var pkgs = ['bankai', 'standard']
+      var pkgs = [
+        'bankai',
+        'standard'
+      ]
       var msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.devInstall(dir, pkgs, done)
     },
     function (done) {
-      written.push(path.join(dir, '.gitignore'))
+      var filename = '.gitignore'
+      printFile(filename)
+      written.push(path.join(dir, filename))
       lib.writeIgnore(dir, done)
     },
     function (done) {
-      written.push(path.join(dir, 'README.md'))
+      var filename = 'README.md'
+      printFile(filename)
+      written.push(path.join(dir, filename))
       lib.writeReadme(dir, done)
     },
     function (done) {
-      written.push(path.join(dir, 'index.js'))
+      var filename = 'index.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
       lib.writeIndex(dir, done)
+    },
+    function (done) {
+      var filename = 'sw.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeServiceWorker(dir, done)
+    },
+    function (done) {
+      var filename = 'views/main.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeMainView(dir, done)
+    },
+    function (done) {
+      var filename = 'views/404.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeNotFoundView(dir, done)
+    },
+    function (done) {
+      var filename = 'manifest.json'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeManifest(dir, done)
+    },
+    function (done) {
+      var filename = 'assets/icon.png'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeIcon(dir, done)
     }
   ]
 
@@ -127,6 +174,10 @@ function create (dir, argv) {
 
   function print (val) {
     if (!argv.quiet) console.log(val)
+  }
+
+  function printFile (filename) {
+    print('Creating file ' + clr(filename, 'cyan') + '…')
   }
 }
 
