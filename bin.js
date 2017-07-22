@@ -87,7 +87,7 @@ function create (dir, argv) {
       print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
       var pkgs = [
-        'choo',
+        'choo@next',
         'choo-log',
         'choo-devtools',
         'choo-service-worker',
