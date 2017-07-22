@@ -90,8 +90,7 @@ function create (dir, argv) {
       lib.install(dir, pkgs, done)
     },
     function (done) {
-      // var pkgs = ['bankai', 'standard']
-      var pkgs = []
+      var pkgs = ['bankai', 'standard']
       var msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.devInstall(dir, pkgs, done)
@@ -116,7 +115,7 @@ function create (dir, argv) {
       print('  ' + clr(err.message, 'red') + '\n')
       mapLimit(written, 1, cleanFile, function (err) {
         if (err) throw err
-        console.log('\nCleanup completed, please try again sometime.')
+        console.log('Cleanup completed, please try again sometime.')
         process.exit(1)
       })
     } else {
