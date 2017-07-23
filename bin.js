@@ -4,6 +4,7 @@ var mapLimit = require('async-collection/map-limit')
 var series = require('async-collection/series')
 var ansi = require('ansi-escape-sequences')
 var minimist = require('minimist')
+var dedent = require('dedent')
 var rimraf = require('rimraf')
 var path = require('path')
 
@@ -173,9 +174,20 @@ function create (dir, argv) {
         process.exit(1)
       })
     } else {
-      print(clr('\nAll done, good job! ' + TRAIN, 'green'))
-      print('\nDo you enjoy using this software? Become a backer:')
-      print(clr('https://opencollective.com/choo', 'cyan'))
+      var msg = dedent`
+        App created in ${clr(dir, 'green')}.
+        ${clr('All done, good job!', 'magenta')} ${TRAIN}
+
+        The following commands are available:
+          ${clr('npm start', 'cyan')}        Start the development server
+          ${clr('npm test', 'cyan')}         Lint, validate deps & run tests
+          ${clr('npm run build', 'cyan')}    Compile all files to ${clr('dist/', 'green')}
+          ${clr('npm run inspect', 'cyan')}  Inspect the bundle dependencies
+
+        Do you enjoy using this software? Become a backer:
+        ${clr('https://opencollective.com/choo', 'cyan')}
+      `.replace(/\n$/g, '')
+      print('\n' + msg)
     }
   })
 

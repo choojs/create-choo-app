@@ -69,9 +69,9 @@ exports.writeReadme = function (dir, cb) {
     ## Commands
     Command                | Description                                      |
     -----------------------|--------------------------------------------------|
-    \`$ npm install\`      | Install all dependencies
     \`$ npm start\`        | Start the development server
-    \`$ npm run build\`    | Compile all files into dist/
+    \`$ npm test\`         | Lint, validate deps & run tests
+    \`$ npm run build\`    | Compile all files into \`dist/\`
     \`$ npm run inspect\`  | Inspect the bundle's dependencies
   `
 
