@@ -61,7 +61,7 @@ var argv = minimist(process.argv.slice(2), {
   if (argv.help) {
     console.log(USAGE)
   } else if (argv.version) {
-    console.log(require('../package.json').version)
+    console.log(require('./package.json').version)
   } else if (!dir) {
     console.log(NODIR)
     process.exit(1)
