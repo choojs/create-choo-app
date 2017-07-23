@@ -2,7 +2,7 @@
   "name": "create-choo-app",
   "description": "Create a fresh choo application",
   "repository": "choojs/create-choo-app",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "bin": {
     "create-choo-app": "./bin.js"
   },
