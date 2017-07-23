@@ -218,7 +218,7 @@ exports.writeMainView = function (dir, cb) {
 exports.writeIcon = function (dir, cb) {
   var iconPath = path.join(__dirname, 'assets/icon.png')
   var dirname = path.join(dir, 'assets')
-  var filename = path.join(dirname, 'manifest.json')
+  var filename = path.join(dirname, 'icon.png')
   mkdirp(dirname, function (err) {
     if (err) return cb(new Error('Could not create directory ' + dirname))
     var source = fs.createReadStream(iconPath)
