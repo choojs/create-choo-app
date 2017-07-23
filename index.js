@@ -5,6 +5,8 @@ var path = require('path')
 var pump = require('pump')
 var fs = require('fs')
 
+var TRAIN = '🚂🚋🚋'
+
 exports.mkdir = function (dir, cb) {
   mkdirp(dir, function (err) {
     if (err) return cb(new Error('Could not create directory ' + dir))
@@ -171,14 +173,20 @@ exports.writeNotFoundView = function (dir, cb) {
   var file = dedent`
     var html = require('choo/html')
 
+    var TITLE = '${TRAIN} - route not found'
+
     module.exports = view
 
     function view (state, emit) {
+      if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
       return html\`
         <body class="sans-serif">
           <h1 class="f-headline pa3 pa4-ns">
             404 - route not found
           </h1>
+          <a href="/" class="link black underline">
+            Back to main
+          </a>
         </body>
       \`
     }
@@ -196,9 +204,12 @@ exports.writeMainView = function (dir, cb) {
   var file = dedent`
     var html = require('choo/html')
 
+    var TITLE = '${TRAIN}'
+
     module.exports = view
 
     function view (state, emit) {
+      if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
       return html\`
         <body class="sans-serif">
           <h1 class="f-headline pa3 pa4-ns">
