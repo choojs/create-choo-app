@@ -100,7 +100,7 @@ function create (dir, argv) {
     },
     function (done) {
       var pkgs = [
-        'bankai',
+        'bankai@next',
         'standard'
       ]
       var msg = clrInstall(pkgs)
