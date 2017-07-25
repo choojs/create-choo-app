@@ -266,6 +266,7 @@ exports.devInstall = function (dir, packages, cb) {
 exports.createGit = function (dir, message, cb) {
   var init = 'git init'
   var add = 'git add -A'
+  var config = 'git config user.email'
   var commit = 'git commit -m "' + message + '"'
 
   var popd = pushd(dir)
@@ -275,10 +276,14 @@ exports.createGit = function (dir, message, cb) {
     exec(add, function (err) {
       if (err) return cb(new Error(add))
 
-      exec(commit, function (err) {
-        if (err) return cb(new Error(commit))
-        popd()
-        cb()
+      exec(config, function (err) {
+        if (err) return cb(new Error(config))
+
+        exec(commit, function (err) {
+          if (err) return cb(new Error(commit))
+          popd()
+          cb()
+        })
       })
     })
   })
