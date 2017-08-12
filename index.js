@@ -30,7 +30,7 @@ exports.writePackage = function (dir, cb) {
       "build": "bankai build index.js",
       "inspect": "bankai inspect index.js",
       "start": "bankai start index.js",
-      "test": "standard && test-deps",
+      "test": "standard && npm run test-deps",
       "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
     }
   }
