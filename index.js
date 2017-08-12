@@ -97,7 +97,7 @@ exports.writeIndex = function (dir, cb) {
     app.route('/*', require('./views/404'))
 
     if (!module.parent) app.mount('body')
-    else module.exports = app
+    else module.exports = app\n
   `
 
   write(filename, file, cb)
@@ -138,7 +138,7 @@ exports.writeServiceWorker = function (dir, cb) {
           if (keyList[i] !== VERSION) return self.caches.delete(keyList[i])
         }))
       }))
-    })
+    })\n
   `
 
   write(filename, file, cb)
@@ -189,7 +189,7 @@ exports.writeNotFoundView = function (dir, cb) {
           </a>
         </body>
       \`
-    }
+    }\n
   `
 
   mkdirp(dirname, function (err) {
@@ -217,7 +217,7 @@ exports.writeMainView = function (dir, cb) {
           </h1>
         </body>
       \`
-    }
+    }\n
   `
 
   mkdirp(dirname, function (err) {
