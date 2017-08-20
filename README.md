@@ -8,7 +8,7 @@ Create a fresh choo application. It installs [choo](https://github.com/choojs/ch
 - [sheetify](https://github.com/stackcss/sheetify/), a CSS bundler
 - [choo-log](https://github.com/choojs/choo-log) and [choo-devtools](https://github.com/choojs/choo-devtools), to improve the development experience
 - [choo-service-worker](https://github.com/choojs/choo-service-worker), for offline support
-- [tachyons](http://tachyons.io/), a CSS toolkit for crazy people
+- [tachyons](http://tachyons.io/), a minimalist CSS toolkit
 - [standard](https://standardjs.com/), a JavaScript linter
 - [dependency-check](https://github.com/maxogden/dependency-check), to verify your dependencies are listed in `package.json`
 
