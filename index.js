@@ -91,9 +91,8 @@ exports.writeIndex = function (dir, cb) {
       app.use(require('choo-devtools')())
       app.use(require('choo-log')())
     } else {
-      // Enable once you want service workers support. At the moment you'll
-      // need to insert the file names yourself & bump the dep version by hand.
-      // app.use(require('choo-service-worker')())
+      // Enable service workers by default. 
+      app.use(require('choo-service-worker')('../sw.js'))
     }
 
     app.route('/', require('./views/main'))
@@ -112,35 +111,39 @@ exports.writeServiceWorker = function (dir, cb) {
     /* global self */
 
     var VERSION = String(Date.now())
-    var URLS = [
-      '/',
-      '/bundle.css',
-      '/bundle.js',
-      'assets/icon.png'
-    ]
+    var FILES = process.env.FILE_LIST
 
     // Respond with cached resources
     self.addEventListener('fetch', function (e) {
-      e.respondWith(self.caches.match(e.request).then(function (request) {
-        if (request) return request
-        else return self.fetch(e.request)
-      }))
+      var request = self.caches.match(e.request)
+        .then(function (req) {
+          return req || self.fetch(e.request)
+        })
+
+      e.respondWith(request)
     })
+
 
     // Register worker
     self.addEventListener('install', function (e) {
-      e.waitUntil(self.caches.open(VERSION).then(function (cache) {
-        return cache.addAll(URLS)
-      }))
+      var cacheFiles = self.caches.open(VERSION)
+        .then(function (cache) {
+          return cache.addAll(FILES)
+        })
+
+      e.waitUntil(cacheFiles)
     })
 
     // Remove outdated resources
     self.addEventListener('activate', function (e) {
-      e.waitUntil(self.caches.keys().then(function (keyList) {
-        return Promise.all(keyList.map(function (key, i) {
-          if (keyList[i] !== VERSION) return self.caches.delete(keyList[i])
-        }))
-      }))
+      var removeKeys = self.caches.keys()
+        .then(function (keyList) {
+          return Promise.all(keyList.map(function (key, i) {
+            if (keyList[i] !== VERSION) return self.caches.delete(keyList[i])
+          }))
+        })
+
+      e.waitUntil(removeKeys)
     })\n
   `
 
