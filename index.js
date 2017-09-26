@@ -91,8 +91,7 @@ exports.writeIndex = function (dir, cb) {
       app.use(require('choo-devtools')())
       app.use(require('choo-log')())
     } else {
-      // Enable once you want service workers support. At the moment you'll
-      // need to insert the file names yourself & bump the dep version by hand.
+      // Enable service workers by default. 
       app.use(require('choo-service-worker')('../sw.js'))
     }
 
