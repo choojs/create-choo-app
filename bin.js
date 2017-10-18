@@ -88,8 +88,7 @@ function create (dir, argv) {
       print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
       var pkgs = [
-        'choo@next',
-        'choo-log',
+        'choo',
         'choo-devtools',
         'choo-service-worker',
         'sheetify',
@@ -101,7 +100,7 @@ function create (dir, argv) {
     },
     function (done) {
       var pkgs = [
-        'bankai@next',
+        'bankai',
         'dependency-check',
         'standard'
       ]
