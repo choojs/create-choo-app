@@ -4,13 +4,17 @@
 
 Create a fresh choo application. It installs [choo](https://github.com/choojs/choo), along with:
 
-- [bankai](https://github.com/choojs/bankai), an asset bundler and static file server
+- [bankai](https://github.com/choojs/bankai), an asset bundler and static file
+  server
 - [sheetify](https://github.com/stackcss/sheetify/), a CSS bundler
-- [choo-log](https://github.com/choojs/choo-log) and [choo-devtools](https://github.com/choojs/choo-devtools), to improve the development experience
-- [choo-service-worker](https://github.com/choojs/choo-service-worker), for offline support
+- [choo-devtools](https://github.com/choojs/choo-devtools) to improve the
+  development experience
+- [choo-service-worker](https://github.com/choojs/choo-service-worker), for
+  offline support
 - [tachyons](http://tachyons.io/), a minimalist CSS toolkit
 - [standard](https://standardjs.com/), a JavaScript linter
-- [dependency-check](https://github.com/maxogden/dependency-check), to verify your dependencies are listed in `package.json`
+- [dependency-check](https://github.com/maxogden/dependency-check), to verify
+  your dependencies are listed in `package.json`
 
 ## Usage
 ```sh
