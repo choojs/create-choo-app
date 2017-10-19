@@ -128,6 +128,12 @@ function create (dir, argv) {
       lib.writeIndex(dir, done)
     },
     function (done) {
+      var filename = 'store.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeStore(dir, done)
+    },
+    function (done) {
       var filename = 'sw.js'
       printFile(filename)
       written.push(path.join(dir, filename))
