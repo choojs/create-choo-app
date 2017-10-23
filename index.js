@@ -83,6 +83,7 @@ exports.writeIndex = function (dir, cb) {
   var file = dedent`
     var css = require('sheetify')
     var choo = require('choo')
+    var store = require('./store')
 
     css('tachyons')
 
@@ -94,6 +95,8 @@ exports.writeIndex = function (dir, cb) {
       // need to insert the file names yourself & bump the dep version by hand.
       // app.use(require('choo-service-worker')())
     }
+
+    app.use(store)
 
     app.route('/', require('./views/main'))
     app.route('/*', require('./views/404'))
@@ -212,15 +215,27 @@ exports.writeMainView = function (dir, cb) {
 
     function view (state, emit) {
       if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
+
       return html\`
         <body class="sans-serif">
           <h1 class="f-headline pa3 pa4-ns">
             Choo choo!
           </h1>
+
+          <div class="ph3 ph4-ns">
+            <p>Current number of clicks: \${state.totalClicks}</p>
+
+            <button class="f5 dim br-pill ph3 pv2 mb2 dib white bg-hot-pink bn pointer" onclick=\${handleClick}>Click Me!</button>
+          </div>
         </body>
       \`
+
+      function handleClick () {
+        emit('clicks:add', 1)
+      }
     }\n
   `
+  file = file.replace(/\\\$/g, '$')
 
   mkdirp(dirname, function (err) {
     if (err) return cb(new Error('Could not create directory ' + dirname))
@@ -241,6 +256,26 @@ exports.writeIcon = function (dir, cb) {
       cb()
     })
   })
+}
+
+exports.writeStore = function (dir, cb) {
+  var filename = path.join(dir, 'store.js')
+  var file = dedent`
+    module.exports = store
+
+    function store (state, emitter) {
+      state.totalClicks = 0
+
+      emitter.on('DOMContentLoaded', function () {
+        emitter.on('clicks:add', function (count) {
+          state.totalClicks += count
+          emitter.emit(state.events.RENDER)
+        })
+      })
+    }\n
+  `
+
+  write(filename, file, cb)
 }
 
 exports.install = function (dir, packages, cb) {
