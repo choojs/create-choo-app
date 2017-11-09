@@ -101,6 +101,7 @@ function create (dir, argv) {
     function (done) {
       var pkgs = [
         'bankai',
+        'choo-scaffold',
         'dependency-check',
         'standard'
       ]

@@ -28,6 +28,7 @@ exports.writePackage = function (dir, cb) {
     "private": true,
     "scripts": {
       "build": "bankai build index.js",
+      "create": "choo-scaffold",
       "inspect": "bankai inspect index.js",
       "start": "bankai start index.js",
       "test": "standard && npm run test-deps",
@@ -72,6 +73,7 @@ exports.writeReadme = function (dir, cb) {
     \`$ npm start\`        | Start the development server
     \`$ npm test\`         | Lint, validate deps & run tests
     \`$ npm run build\`    | Compile all files into \`dist/\`
+    \`$ npm run create\`   | Generate a scaffold file
     \`$ npm run inspect\`  | Inspect the bundle's dependencies
   `
 
