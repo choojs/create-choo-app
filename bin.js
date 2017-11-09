@@ -129,7 +129,7 @@ function create (dir, argv) {
       lib.writeIndex(dir, done)
     },
     function (done) {
-      var filename = 'store.js'
+      var filename = 'stores/clicks.js'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeStore(dir, done)

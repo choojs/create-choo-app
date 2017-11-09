@@ -261,7 +261,7 @@ exports.writeIcon = function (dir, cb) {
 }
 
 exports.writeStore = function (dir, cb) {
-  var filename = path.join(dir, 'store.js')
+  var filename = path.join(dir, 'stores/clicks.js')
   var file = dedent`
     module.exports = store
 
@@ -277,7 +277,10 @@ exports.writeStore = function (dir, cb) {
     }\n
   `
 
-  write(filename, file, cb)
+  mkdirp(path.dirname(filename), function (err) {
+    if (err) return cb(err)
+    write(filename, file, cb)
+  })
 }
 
 exports.install = function (dir, packages, cb) {
