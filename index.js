@@ -85,7 +85,7 @@ exports.writeIndex = function (dir, cb) {
   var file = dedent`
     var css = require('sheetify')
     var choo = require('choo')
-    var store = require('./store')
+    var store = require('./stores/clicks')
 
     css('tachyons')
 
