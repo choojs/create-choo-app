@@ -2,24 +2,28 @@
 [![npm version][2]][3] [![build status][4]][5]
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
-Create a fresh choo application. It installs [choo](https://github.com/choojs/choo), along with:
-
-- [bankai](https://github.com/choojs/bankai), an asset bundler and static file
-  server
-- [sheetify](https://github.com/stackcss/sheetify/), a CSS bundler
-- [choo-devtools](https://github.com/choojs/choo-devtools) to improve the
-  development experience
-- [choo-service-worker](https://github.com/choojs/choo-service-worker), for
-  offline support
-- [tachyons](http://tachyons.io/), a minimalist CSS toolkit
-- [standard](https://standardjs.com/), a JavaScript linter
-- [dependency-check](https://github.com/maxogden/dependency-check), to verify
-  your dependencies are listed in `package.json`
+Create a fresh choo application. Because starting a new project should take
+minutes, not days.
 
 ## Usage
 ```sh
 $ npx create-choo-app <project-directory>
 ```
+
+## Dependencies
+`create-choo-app` installs the following dependencies:
+
+Name                                                                 | Dependency Type | Description |
+---------------------------------------------------------------------|-----------------|-------------|
+[choo](https://github.com/choojs/choo)                               | Production      | Fast, 4kb framework.
+[choo-service-worker](https://github.com/choojs/choo-service-worker) | Production      | Offline support for Choo.
+[sheetify](https://github.com/stackcss/sheetify/)                    | Production      | Hyper performant CSS-in-JS.
+[tachyons](http://tachyons.io/)                                      | Production      | A minimalist CSS toolkit.
+[bankai](https://github.com/choojs/bankai)                           | Development     | An asset bundler and static file server.
+[choo-devtools](https://github.com/choojs/choo-devtools)             | Development     | Debug Choo applications.
+[choo-scaffold](https://github.com/choojs/choo-scaffold)             | Development     | Generate new application files.
+[dependency-check](https://github.com/maxogden/dependency-check)     | Development     | Verify project dependencies.
+[standard](https://standardjs.com/)                                  | Development     | Statically check JavaScript files for errors.
 
 ## API
 ```txt
