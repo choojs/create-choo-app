@@ -191,9 +191,11 @@ exports.writeNotFoundView = function (dir, cb) {
           <h1 class="f-headline pa3 pa4-ns">
             404 - route not found
           </h1>
-          <a href="/" class="link black underline">
-            Back to main
-          </a>
+          <div class="ph3 ph4-ns">
+            <a href="/" class="link black underline">
+              Back to main
+            </a>
+          </div>
         </body>
       \`
     }\n
