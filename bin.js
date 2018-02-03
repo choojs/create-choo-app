@@ -165,7 +165,7 @@ function create (dir, argv) {
       lib.writeIcon(dir, done)
     },
     function (done) {
-      var message = 'The train has departed! :steam_locomotive::train::train::train:'
+      var message = '.'
       print('\nInitializing ' + clr('git', 'cyan'))
       written.push(path.join(dir, '.git'))
       lib.createGit(dir, message, done)
