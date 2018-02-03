@@ -59,6 +59,7 @@ var argv = minimist(process.argv.slice(2), {
 
 ;(function main (argv) {
   var dir = argv._[0]
+  var description = argv._[1]
 
   if (argv.help) {
     console.log(USAGE)
@@ -68,11 +69,11 @@ var argv = minimist(process.argv.slice(2), {
     console.log(NODIR)
     process.exit(1)
   } else {
-    create(path.join(process.cwd(), dir), argv)
+    create(path.join(process.cwd(), dir), description, argv)
   }
 })(argv)
 
-async function create (dir, argv) {
+async function create (dir, description, argv) {
   var written = []
   var cmds = [
     function (done) {
@@ -173,14 +174,16 @@ async function create (dir, argv) {
     }
   ]
 
-  var answers = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'description',
-      message: "What's the purpose of your project?\n>"
-    }
-  ])
-  var description = answers.description
+  if (!description) {
+    var answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'description',
+        message: "What's the purpose of your project?\n>"
+      }
+    ])
+    description = answers.description
+  }
 
   series(cmds, function (err) {
     if (err) {

@@ -10,7 +10,7 @@
     "deps": "dependency-check . && dependency-check . -i ./bin.js --extra --no-dev",
     "start": "node .",
     "test": "standard && npm run deps && npm run test-fast",
-    "test-fast": "rm -rf tmp && ./bin.js tmp"
+    "test-fast": "rm -rf tmp && ./bin.js tmp test"
   },
   "dependencies": {
     "ansi-escape-sequences": "^3.0.0",
