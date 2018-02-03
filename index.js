@@ -164,7 +164,7 @@ exports.writeManifest = function (dir, description, cb) {
 exports.writeNotFoundView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, '404.js')
-  var projectname = path.dirname(dir)
+  var projectname = path.basename(dir)
   var file = dedent`
     var html = require('choo/html')
 
@@ -198,7 +198,7 @@ exports.writeNotFoundView = function (dir, cb) {
 exports.writeMainView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, 'main.js')
-  var projectname = path.dirname(dir)
+  var projectname = path.basename(dir)
   var file = dedent`
     var html = require('choo/html')
 

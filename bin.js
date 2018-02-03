@@ -3,6 +3,7 @@
 var mapLimit = require('async-collection/map-limit')
 var series = require('async-collection/series')
 var ansi = require('ansi-escape-sequences')
+var inquirer = require('inquirer')
 var minimist = require('minimist')
 var dedent = require('dedent')
 var rimraf = require('rimraf')
@@ -71,7 +72,7 @@ var argv = minimist(process.argv.slice(2), {
   }
 })(argv)
 
-function create (dir, argv) {
+async function create (dir, argv) {
   var written = []
   var cmds = [
     function (done) {
@@ -118,7 +119,6 @@ function create (dir, argv) {
     },
     function (done) {
       var filename = 'README.md'
-      var description = 'A very cute app'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeReadme(dir, description, done)
@@ -155,7 +155,6 @@ function create (dir, argv) {
     },
     function (done) {
       var filename = 'manifest.json'
-      var description = 'A very cute app'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeManifest(dir, description, done)
@@ -173,6 +172,15 @@ function create (dir, argv) {
       lib.createGit(dir, message, done)
     }
   ]
+
+  var answers = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'description',
+      message: "What's the purpose of your project?\n>"
+    }
+  ])
+  var description = answers.description
 
   series(cmds, function (err) {
     if (err) {

@@ -16,6 +16,7 @@
     "ansi-escape-sequences": "^3.0.0",
     "async-collection": "^1.0.1",
     "dedent": "^0.7.0",
+    "inquirer": "^5.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "pump": "^1.0.2",
