@@ -296,7 +296,7 @@ exports.writeMainView = function (dir, cb) {
 
               <button class="dim ph3 ba bw1 pv2 b--black pointer bg-white"
                 onclick=\${handleClick}>
-                emit a 'click' event on the store
+                Emit a click event
               </button>
 
               <br><br>
