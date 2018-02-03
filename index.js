@@ -85,9 +85,7 @@ exports.writeIndex = function (dir, cb) {
     if (process.env.NODE_ENV !== 'production') {
       app.use(require('choo-devtools')())
     } else {
-      // Enable once you want service workers support. At the moment you'll
-      // need to insert the file names yourself & bump the dep version by hand.
-      // app.use(require('choo-service-worker')())
+      app.use(require('choo-service-worker')())
     }
 
     app.use(store)
