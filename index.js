@@ -305,17 +305,19 @@ exports.writeMainView = function (dir, cb) {
 
               <p>
                 To make your development journey more pleasant, we've also
-                included devtools. If you open your console, here's a selection
-                of the commands that are at your disposal:
+                included <a
+                href="https://github.com/choojs/choo-devtools">devtools</a>. If
+                you open your browser console, here's a selection of the
+                commands that are at your disposal:
 
                 <ul>
                   <li class="mb3">
                     <strong>choo.state</strong><br>
-                    Log out the current application state.
+                    Log the current application state.
                   </li>
                   <li class="mb3">
                     <strong>choo.log</strong><br>
-                    Log out the last 150 events received by the event bus.
+                    Log the last 150 events received by the event bus.
                   </li>
                   <li class="mb3">
                     <strong>choo.emit</strong><br>
