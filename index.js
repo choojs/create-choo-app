@@ -175,15 +175,9 @@ exports.writeNotFoundView = function (dir, cb) {
     function view (state, emit) {
       if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
       return html\`
-        <body class="sans-serif">
-          <h1 class="f-headline pa3 pa4-ns">
-            404 - route not found
-          </h1>
-          <div class="ph3 ph4-ns">
-            <a href="/" class="link black underline">
-              Back to main
-            </a>
-          </div>
+        <body class="sans-serif pa3">
+          <h1>Route not found.</h1>
+          <a class="pt2" href="/">Back to main.</a>
         </body>
       \`
     }\n
@@ -292,16 +286,17 @@ exports.writeMainView = function (dir, cb) {
               <h2>4.</h2>
 
               <p>
-                So far we've provided you with two views, and one store. This serves
+                So far we've provided you with one base view, <a
+                href="/oh-no">one fallback view</a>, and one store. This serves
                 as an example. A place to start from. It's your project now, so
                 go ahead and delete them once you know how they work.
               </p>
 
-              <p>Current number of clicks: \${state.totalClicks}</p>
+              <p>Number of clicks stored: \${state.totalClicks}</p>
 
               <button class="dim ph3 ba bw1 pv2 b--black pointer bg-white"
                 onclick=\${handleClick}>
-                clicky
+                emit a 'click' event on the store
               </button>
 
               <br><br>
@@ -309,6 +304,35 @@ exports.writeMainView = function (dir, cb) {
 
             <section class="fl mw6 w-50-m w-third-l pa3">
               <h2>5.</h2>
+
+              <p>
+                To make your development journey more pleasant, we've also
+                included devtools. If you open your console, here's a selection
+                of the commands that are at your disposal:
+
+                <ul>
+                  <li class="mb3">
+                    <strong>choo.state</strong><br>
+                    Log out the current application state.
+                  </li>
+                  <li class="mb3">
+                    <strong>choo.log</strong><br>
+                    Log out the last 150 events received by the event bus.
+                  </li>
+                  <li class="mb3">
+                    <strong>choo.emit</strong><br>
+                    Emit an event inside the application event bus.
+                  </li>
+                  <li class="mb3">
+                    <strong>choo.help</strong><br>
+                    See an overview of all available commands.
+                  </li>
+                </ul>
+              </p>
+            </section>
+
+            <section class="fl mw6 w-50-m w-third-l pa3">
+              <h2>6.</h2>
 
               <p>
                 And that's about it! Thanks for reading. If you have any
