@@ -5,8 +5,6 @@ var path = require('path')
 var pump = require('pump')
 var fs = require('fs')
 
-var TRAIN = '🚂🚋🚋'
-
 exports.mkdir = function (dir, cb) {
   mkdirp(dir, function (err) {
     if (err) return cb(new Error('Could not create directory ' + dir))
@@ -172,10 +170,11 @@ exports.writeManifest = function (dir, cb) {
 exports.writeNotFoundView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, '404.js')
+  var projectname = path.dirname(dir)
   var file = dedent`
     var html = require('choo/html')
 
-    var TITLE = '${TRAIN} - route not found'
+    var TITLE = '${projectname} - route not found'
 
     module.exports = view
 
@@ -205,10 +204,11 @@ exports.writeNotFoundView = function (dir, cb) {
 exports.writeMainView = function (dir, cb) {
   var dirname = path.join(dir, 'views')
   var filename = path.join(dirname, 'main.js')
+  var projectname = path.dirname(dir)
   var file = dedent`
     var html = require('choo/html')
 
-    var TITLE = '${TRAIN}'
+    var TITLE = '${projectname} - main'
 
     module.exports = view
 
