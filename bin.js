@@ -118,9 +118,10 @@ function create (dir, argv) {
     },
     function (done) {
       var filename = 'README.md'
+      var description = 'A very cute app'
       printFile(filename)
       written.push(path.join(dir, filename))
-      lib.writeReadme(dir, done)
+      lib.writeReadme(dir, description, done)
     },
     function (done) {
       var filename = 'index.js'
@@ -154,9 +155,10 @@ function create (dir, argv) {
     },
     function (done) {
       var filename = 'manifest.json'
+      var description = 'A very cute app'
       printFile(filename)
       written.push(path.join(dir, filename))
-      lib.writeManifest(dir, done)
+      lib.writeManifest(dir, description, done)
     },
     function (done) {
       var filename = 'assets/icon.png'

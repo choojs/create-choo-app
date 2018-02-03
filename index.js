@@ -52,18 +52,12 @@ exports.writeIgnore = function (dir, cb) {
   write(filename, file, cb)
 }
 
-exports.writeReadme = function (dir, cb) {
+exports.writeReadme = function (dir, description, cb) {
   var filename = path.join(dir, 'README.md')
   var name = path.basename(dir)
   var file = dedent`
     # ${name}
-    A very cute app
-
-    ## Routes
-    Route              | File               | Description                     |
-    -------------------|--------------------|---------------------------------|
-    \`/\`                | \`views/main.js\`    | The main view
-    \`/*\`               | \`views/404.js\`     | Display unhandled routes
+    ${description}
 
     ## Commands
     Command                | Description                                      |
@@ -144,18 +138,18 @@ exports.writeServiceWorker = function (dir, cb) {
   write(filename, file, cb)
 }
 
-exports.writeManifest = function (dir, cb) {
+exports.writeManifest = function (dir, description, cb) {
   var filename = path.join(dir, 'manifest.json')
   var name = path.basename(dir)
   var file = dedent`
     {
       "name": "${name}",
       "short_name": "${name}",
-      "description": "A very cute app",
+      "description": "${description}",
       "start_url": "/",
       "display": "standalone",
-      "background_color": "#ffc0cb",
-      "theme_color": "#ffc0cb",
+      "background_color": "#000",
+      "theme_color": "#000",
       "icons": [{
         "src": "/assets/icon.png",
         "type": "image/png",
