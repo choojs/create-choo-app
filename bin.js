@@ -3,6 +3,7 @@
 var mapLimit = require('async-collection/map-limit')
 var series = require('async-collection/series')
 var ansi = require('ansi-escape-sequences')
+var inquirer = require('inquirer')
 var minimist = require('minimist')
 var dedent = require('dedent')
 var rimraf = require('rimraf')
@@ -58,6 +59,7 @@ var argv = minimist(process.argv.slice(2), {
 
 ;(function main (argv) {
   var dir = argv._[0]
+  var description = argv._[1]
 
   if (argv.help) {
     console.log(USAGE)
@@ -67,11 +69,11 @@ var argv = minimist(process.argv.slice(2), {
     console.log(NODIR)
     process.exit(1)
   } else {
-    create(path.join(process.cwd(), dir), argv)
+    create(path.join(process.cwd(), dir), description, argv)
   }
 })(argv)
 
-function create (dir, argv) {
+async function create (dir, description, argv) {
   var written = []
   var cmds = [
     function (done) {
@@ -120,7 +122,7 @@ function create (dir, argv) {
       var filename = 'README.md'
       printFile(filename)
       written.push(path.join(dir, filename))
-      lib.writeReadme(dir, done)
+      lib.writeReadme(dir, description, done)
     },
     function (done) {
       var filename = 'index.js'
@@ -156,7 +158,7 @@ function create (dir, argv) {
       var filename = 'manifest.json'
       printFile(filename)
       written.push(path.join(dir, filename))
-      lib.writeManifest(dir, done)
+      lib.writeManifest(dir, description, done)
     },
     function (done) {
       var filename = 'assets/icon.png'
@@ -165,12 +167,23 @@ function create (dir, argv) {
       lib.writeIcon(dir, done)
     },
     function (done) {
-      var message = 'The train has departed! :steam_locomotive::train::train::train:'
+      var message = '.'
       print('\nInitializing ' + clr('git', 'cyan'))
       written.push(path.join(dir, '.git'))
       lib.createGit(dir, message, done)
     }
   ]
+
+  if (!description) {
+    var answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'description',
+        message: "What's the purpose of your project?\n>"
+      }
+    ])
+    description = answers.description
+  }
 
   series(cmds, function (err) {
     if (err) {

@@ -10,12 +10,13 @@
     "deps": "dependency-check . && dependency-check . -i ./bin.js --extra --no-dev",
     "start": "node .",
     "test": "standard && npm run deps && npm run test-fast",
-    "test-fast": "rm -rf tmp && ./bin.js tmp"
+    "test-fast": "rm -rf tmp && ./bin.js tmp test"
   },
   "dependencies": {
     "ansi-escape-sequences": "^3.0.0",
     "async-collection": "^1.0.1",
     "dedent": "^0.7.0",
+    "inquirer": "^5.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "pump": "^1.0.2",
