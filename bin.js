@@ -90,7 +90,7 @@ async function create (dir, description, argv) {
       print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
       var pkgs = [
-        'choo',        
+        'choo',
         'choo-service-worker',
         'sheetify',
         'tachyons'
