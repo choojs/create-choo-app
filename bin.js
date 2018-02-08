@@ -179,7 +179,7 @@ async function create (dir, description, argv) {
       {
         type: 'input',
         name: 'description',
-        message: "What's the purpose of your project?\n>"
+        message: "What's the purpose of your project? (This is used in the readme & web app manifest.)\n>"
       }
     ])
     description = answers.description
