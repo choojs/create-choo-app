@@ -399,7 +399,7 @@ exports.writeStore = function (dir, cb) {
 
 exports.install = function (dir, packages, cb) {
   packages = packages.join(' ')
-  var cmd = 'npm install --save --cache-min Infinity --loglevel error ' + packages
+  var cmd = 'npm install --save --loglevel error ' + packages
   var popd = pushd(dir)
   exec(cmd, function (err) {
     if (err) return cb(new Error(cmd))
@@ -410,7 +410,7 @@ exports.install = function (dir, packages, cb) {
 
 exports.devInstall = function (dir, packages, cb) {
   packages = packages.join(' ')
-  var cmd = 'npm install --save-dev --cache-min Infinity --loglevel error ' + packages
+  var cmd = 'npm install --save-dev --loglevel error ' + packages
   var popd = pushd(dir)
   exec(cmd, function (err) {
     if (err) return cb(new Error(cmd))
