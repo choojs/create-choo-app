@@ -77,7 +77,6 @@ exports.writeIndex = function (dir, cb) {
   var file = dedent`
     var css = require('sheetify')
     var choo = require('choo')
-    var store = require('./stores/clicks')
 
     css('tachyons')
 
@@ -88,7 +87,7 @@ exports.writeIndex = function (dir, cb) {
       app.use(require('choo-service-worker')())
     }
 
-    app.use(store)
+    app.use(require('./stores/clicks'))
 
     app.route('/', require('./views/main'))
     app.route('/*', require('./views/404'))
