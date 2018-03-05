@@ -92,8 +92,7 @@ exports.writeIndex = function (dir, cb) {
     app.route('/', require('./views/main'))
     app.route('/*', require('./views/404'))
 
-    if (!module.parent) app.mount('body')
-    else module.exports = app\n
+    module.exports = app.mount('body')\n
   `
 
   write(filename, file, cb)
