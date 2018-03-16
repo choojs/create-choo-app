@@ -63,8 +63,8 @@ your browser.
   <summary>
     <b>Chrome Instructions</b>
   </summary>
-  Click the "more details" dropdown, then click "proceed". Pull Request for
-  screenshots welcome!
+  Click the "more details" dropdown, then click "proceed".
+  <img src="/assets/chrome01.png" alt="chrome01">
 </details>
 
 <details>
