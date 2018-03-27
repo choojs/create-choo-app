@@ -106,6 +106,10 @@ Name                                                                 | Dependenc
 [dependency-check](https://github.com/maxogden/dependency-check)     | Development     | Verify project dependencies.
 [standard](https://standardjs.com/)                                  | Development     | Statically check JavaScript files for errors.
 
+## Removing Dependencies
+
+If you want to remove Tachyons you can do so by running `npm uninstall tachyons` and removing the reference to Tachyons in `./index.js`.
+
 ## API
 ```txt
   $ create-choo-app <project-directory> [options]
