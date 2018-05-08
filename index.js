@@ -101,7 +101,7 @@ exports.writeIndex = function (dir, cb) {
 exports.writeServiceWorker = function (dir, cb) {
   var filename = path.join(dir, 'sw.js')
   var file = dedent`
-    /* global self */
+    /* eslint-env serviceworker */
 
     var VERSION = require('./package.json').version
     var URLS = process.env.FILE_LIST
