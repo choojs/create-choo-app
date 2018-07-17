@@ -345,7 +345,7 @@ exports.writeMainView = function (dir, cb) {
       \`
 
       function handleClick () {
-        emit('clicks:add', 1)
+        emit(state.events.clicks_add, 1)
       }
     }\n
   `
@@ -377,11 +377,14 @@ exports.writeStore = function (dir, cb) {
   var file = dedent`
     module.exports = store
 
+    store.storeName = 'clicks'
     function store (state, emitter) {
       state.totalClicks = 0
 
+      state.events.clicks_add = 'clicks:add'
+
       emitter.on('DOMContentLoaded', function () {
-        emitter.on('clicks:add', function (count) {
+        emitter.on(state.events.clicks_add, function (count) {
           state.totalClicks += count
           emitter.emit(state.events.RENDER)
         })
