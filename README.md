@@ -132,6 +132,8 @@ If you want to remove Tachyons you can do so by running `npm uninstall tachyons`
   https://opencollective.com/choo
 ```
 
+See the generated output [here](https://github.com/perguth/create-choo-app).
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
